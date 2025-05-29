@@ -3,7 +3,8 @@ boolean down;
 boolean left;
 boolean right;
 
-
+boolean recentDown;
+boolean recentRight;
 
 
 Player thePlayer;
@@ -19,15 +20,19 @@ void keyPressed() {
     switch (keyCode){
       case UP:
         up = true;
+        recentDown = false;
         break;
       case DOWN:
         down = true;
+        recentDown = true;
         break;
       case LEFT:
         left = true;
+        recentRight = false;
         break;
       case RIGHT:
         right = true;
+        recentRight = true;
         break;
         
     }
@@ -38,15 +43,19 @@ void keyPressed() {
     switch (keyCode){
       case UP: 
         up = false;
+        recentDown = down;
         break;
       case DOWN:
         down = false;
+        recentDown = false;
         break;
       case LEFT:
         left = false;
+        recentRight = right;
         break;
       case RIGHT:
         right = false;
+        recentRight = false;
         break;
     }
     println(keyCode);
@@ -58,17 +67,25 @@ void keyPressed() {
     {
       thePlayer.vel.y = -5;
     }
-    if (down)
+    if (recentDown)
     {
       thePlayer.vel.y = 5;
+    }
+    if (! (up || recentDown))
+    {
+      thePlayer.vel.y = 0;
     }
     if (left)
     {
       thePlayer.vel.x = -5;
     }
-    if (right)
+    if (recentRight)
     {
       thePlayer.vel.x = 5;
+    }
+    if (! (left || recentRight))
+    {
+      thePlayer.vel.x = 0;
     }
   }
 
