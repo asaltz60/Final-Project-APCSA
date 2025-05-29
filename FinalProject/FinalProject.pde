@@ -29,10 +29,12 @@ void keyPressed() {
       case LEFT:
         left = true;
         recentRight = false;
+        thePlayer.flip = true;
         break;
       case RIGHT:
         right = true;
         recentRight = true;
+        thePlayer.flip = false;
         break;
         
     }
@@ -59,6 +61,7 @@ void keyPressed() {
         break;
     }
     println(keyCode);
+    
   }
   
   void playerMove()
@@ -87,6 +90,8 @@ void keyPressed() {
     {
       thePlayer.vel.x = 0;
     }
+    
+
   }
 
   
