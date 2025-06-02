@@ -8,12 +8,19 @@ class Player{
   PVector position;
   PVector vel;
   
+  int frameCount = 0;
+  
   boolean flip;
   PImage idle;
   PImage[] walk;
   
+  int[] walkPosX = {14,9,9,9,12,13,18,11,18,8,14,18};
+  int[] walkPosY = {1,1,1,3,2,2,2,1,5,2,2,2};
+  
+  
   
   PImage idleF;
+  PImage[] walkF;
   
   
 
@@ -25,12 +32,26 @@ class Player{
     idleF = flip(idle);
     
     walk = new PImage[12];
+    walkF = new PImage[12];
     
     for (int i = 0; i < 9; i++)
     {
-      walk[i] = loadImage("AmongUsSprites/Walk000" + (i + 1));
+      walk[i] = loadImage("AmongUsSprites/Walk000" + (i + 1) + ".png");
+      println(walk[i].width);
+    }
+    
+    for (int i = 10; i < 13; i++)
+    {
+      walk[i - 1] = loadImage("AmongUsSprites/Walk00" + i + ".png");
+      println(walk[i - 1].width);
+    }
+    
+    for (int i = 0; i < 12; i++)
+    {
+      walkF[i] = flip(walk[i]);
     }
       
+    
     
   }
   
@@ -46,10 +67,8 @@ class Player{
       {
         flippedImg.pixels[i] = img.pixels[i - 2 * (i % img.width) + img.width - 1];
       }
-      println(img.pixels[i - 2 * (i % img.width) + img.width - 1]);
     }
     
-    print(img_array);
     return flippedImg;
     
   }
@@ -64,15 +83,21 @@ class Player{
   
   void display() // displays the player sprite
   {
-    if (flip)
+    circle(position.x,position.y, 1);
+    
+   
+    if (vel.x != 0 || vel.y != 0)
     {
-      image(idleF, position.x,position.y, -1 * idle.width / 3,  idle.height / 3);
+      frameCount++;
+      int currentIndex = (frameCount / 5) % 12;
+      PImage currentWalk = (flip? walkF: walk)[currentIndex];
+      image(currentWalk, position.x + (flip? -currentWalk.width + 135 + walkPosX[currentIndex]:-walkPosX[currentIndex]) / 3.0,position.y + walkPosY[currentIndex] / 3.0, currentWalk.width / 3.0, -1 * currentWalk.height / 3.0);
     }
     else
     {
-      image(idle, position.x,position.y, -1 * idle.width / 3,  idle.height / 3);
+      image((flip? idleF: idle), position.x + (flip? -7 :-23) / 3.0,position.y + 4 / 3.0, idle.width / 3, -1 * idle.height / 3);
     }
-}
+  }
   
   void render()
   {
