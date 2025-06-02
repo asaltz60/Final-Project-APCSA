@@ -1,26 +1,30 @@
 class Player{
   
-  color redBright = color(215, 30, 34);
+  color redBright = color(215, 30, 34); 
   color redShadow = color(122, 8, 56);
   color visorLight = color(150,202,221);
   color visorDark = color(73,99,109);
   
-  PVector position;
-  PVector vel;
+  //Above are colors of the red among us, replace the pixels in the image with these
   
-  int frameCount = 0;
+  PVector position; // Position of bottom left corner of shadow
+  PVector vel; // velocity of shadow
   
-  boolean flip;
-  PImage idle;
-  PImage[] walk;
+  int frameCount = 0; // variable storing what frame of the walk animation to play
   
-  int[] walkPosX = {14,9,9,9,12,13,18,11,18,8,14,18};
-  int[] walkPosY = {1,1,1,3,2,2,2,1,5,2,2,2};
+  boolean flip; // bool storing whether to flip the image or not
+  PImage idle; // idle image
+  PImage[] walk; // all frames of walking animation
+  
+  int[] walkPosX = {14,9,9,9,12,13,18,11,18,8,14,18}; //X offset for walking animation to allign position to the shadow
+  int[] walkPosY = {1,1,1,3,2,2,2,1,5,2,2,2};// same but y offset
   
   
   
-  PImage idleF;
-  PImage[] walkF;
+  PImage idleF; // flipped idle animation
+  PImage[] walkF; // flipped frames of walk animation
+  
+  PVector size; // size of collision 
   
   
 
@@ -51,7 +55,7 @@ class Player{
       walkF[i] = flip(walk[i]);
     }
       
-    
+    size = new PVector(45, -12.0);
     
   }
   
@@ -84,7 +88,7 @@ class Player{
   void display() // displays the player sprite
   {
     circle(position.x,position.y, 1);
-    
+    rect(position.x,position.y, size.x, size.y);
    
     if (vel.x != 0 || vel.y != 0)
     {
@@ -97,6 +101,7 @@ class Player{
     {
       image((flip? idleF: idle), position.x + (flip? -7 :-23) / 3.0,position.y + 4 / 3.0, idle.width / 3, -1 * idle.height / 3);
     }
+    
   }
   
   void render()

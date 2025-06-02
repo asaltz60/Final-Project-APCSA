@@ -6,6 +6,8 @@ boolean right;
 boolean recentDown;
 boolean recentRight;
 
+ArrayList<ColObj> ColList;
+
 
 Player thePlayer;
 void setup()
@@ -13,6 +15,10 @@ void setup()
   frameRate(120);
   size(1000,800);
   thePlayer = new Player(new PVector(0,0));
+  ColList = new ArrayList<ColObj>();
+  
+  ColList.add(new ColObj(new PVector(0,0),new PVector(100,100)));
+  
 }
 
 
@@ -93,12 +99,23 @@ void keyPressed() {
     
 
   }
+  
+  //void colDetector(Player p, ColObj obj)
+  //{
+    //if 
+    
 
   
 void draw()
 {
   background(173, 216, 230);
   playerMove();
+  
+  for (ColObj obj : ColList)
+  {
+    obj.render();
+  }
+  
   thePlayer.render();
 }
   
