@@ -13,7 +13,7 @@ class ColObj {
   void display()
   {
     circle(pos.x,pos.y, 1);
-    rect(pos.x,pos.y, size.x, size.y);
+    rect(pos.x,pos.y, size.x, -size.y);
   }
   
   void render()

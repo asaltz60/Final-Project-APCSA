@@ -55,7 +55,7 @@ class Player{
       walkF[i] = flip(walk[i]);
     }
       
-    size = new PVector(45, -12.0);
+    size = new PVector(45, 12);
     
   }
   
@@ -88,7 +88,7 @@ class Player{
   void display() // displays the player sprite
   {
     circle(position.x,position.y, 1);
-    rect(position.x,position.y, size.x, size.y);
+    rect(position.x,position.y, size.x, -size.y);
    
     if (vel.x != 0 || vel.y != 0)
     {

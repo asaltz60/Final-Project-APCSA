@@ -17,7 +17,7 @@ void setup()
   thePlayer = new Player(new PVector(0,0));
   ColList = new ArrayList<ColObj>();
   
-  ColList.add(new ColObj(new PVector(0,0),new PVector(100,100)));
+  ColList.add(new ColObj(new PVector(101,200),new PVector(100,100)));
   
 }
 
@@ -100,9 +100,42 @@ void keyPressed() {
 
   }
   
-  //void colDetector(Player p, ColObj obj)
-  //{
-    //if 
+  void colDetector(Player p, ColObj obj)
+  {
+    if (p.position.x + p.size.x >= obj.pos.x && p.position.x <= obj.pos.x + obj.size.x && 
+    p.position.y - p.size.y <= obj.pos.y && p.position.y >= obj.pos.y - obj.size.y)
+    {
+      if (p.position.x + p.size.x >= obj.pos.x && p.position.x <= obj.pos.x + obj.size.x)
+      {
+        background(255, 50,50);
+        if (p.position.x < obj.pos.x)
+        {
+          println("Left");
+          p.position.x = obj.pos.x - p.size.x;
+          p.vel.x = min(p.vel.x,0);
+        }
+        else if (p.position.x + p.size.x > obj.pos.x + obj.size.x)
+        {
+          println("Right");
+          p.position.x = obj.pos.x + obj.size.x;
+          p.vel.x = max(p.vel.x,0);
+        }
+      }
+      if (p.position.y - p.size.y <= obj.pos.y && p.position.y >= obj.pos.y - obj.size.y)
+      {
+        if (p.position.y > obj.pos.y)
+        {
+          println("Down");
+          p.position.y = obj.pos.y + p.size.y;
+          p.vel.y = max(p.vel.y,0);
+        }
+        else if (p.position.y - p.size.y < obj.pos.y - obj.size.y)
+        {
+          println("Up");
+        }
+      }
+    }
+  }
     
 
   
@@ -113,6 +146,7 @@ void draw()
   
   for (ColObj obj : ColList)
   {
+    colDetector(thePlayer, obj);
     obj.render();
   }
   
