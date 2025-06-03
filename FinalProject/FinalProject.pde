@@ -17,7 +17,8 @@ void setup()
   thePlayer = new Player(new PVector(0,0));
   ColList = new ArrayList<ColObj>();
   
-  ColList.add(new ColObj(new PVector(101,200),new PVector(100,100)));
+  ColList.add(new ColObj(new PVector(104.5,250.1),new PVector(200,200)));
+  ColList.add(new ColObj(new PVector(500,500),new PVector(4,4)));
   
 }
 
@@ -102,38 +103,49 @@ void keyPressed() {
   
   void colDetector(Player p, ColObj obj)
   {
-    if (p.position.x + p.size.x >= obj.pos.x && p.position.x <= obj.pos.x + obj.size.x && 
-    p.position.y - p.size.y <= obj.pos.y && p.position.y >= obj.pos.y - obj.size.y)
+    boolean isTouching = p.position.x + p.size.x >= obj.pos.x 
+    && p.position.x <= obj.pos.x + obj.size.x 
+    && p.position.y - p.size.y <= obj.pos.y 
+    && p.position.y >= obj.pos.y - obj.size.y;
+    if (isTouching)
     {
-      if (p.position.x + p.size.x >= obj.pos.x && p.position.x <= obj.pos.x + obj.size.x)
-      {
         background(255, 50,50);
-        if (p.position.x < obj.pos.x)
-        {
-          println("Left");
-          p.position.x = obj.pos.x - p.size.x;
-          p.vel.x = min(p.vel.x,0);
-        }
-        else if (p.position.x + p.size.x > obj.pos.x + obj.size.x)
-        {
-          println("Right");
-          p.position.x = obj.pos.x + obj.size.x;
-          p.vel.x = max(p.vel.x,0);
-        }
-      }
-      if (p.position.y - p.size.y <= obj.pos.y && p.position.y >= obj.pos.y - obj.size.y)
-      {
-        if (p.position.y > obj.pos.y)
+        
+        boolean leftSide = p.position.x + p.size.x - 5 < obj.pos.x;
+        boolean rightSide = p.position.x + 5 > obj.pos.x + obj.size.x;
+        boolean downSide = p.position.y > obj.pos.y;
+        boolean upSide = p.position.y - p.size.y < obj.pos.y - obj.size.y;
+        
+        if (!leftSide && ! rightSide && downSide && ! upSide)
         {
           println("Down");
           p.position.y = obj.pos.y + p.size.y;
           p.vel.y = max(p.vel.y,0);
         }
-        else if (p.position.y - p.size.y < obj.pos.y - obj.size.y)
+        if (! leftSide && ! rightSide && ! downSide && upSide)
         {
           println("Up");
+          p.position.y = obj.pos.y - obj.size.y;
+          p.vel.y = min(p.vel.y,0);
         }
-      }
+        if (leftSide && ! rightSide && ! downSide && ! upSide)
+        {
+          println("Left");
+          p.position.x = obj.pos.x - p.size.x;
+          p.vel.x = min(p.vel.x,0);
+        }
+        if (!leftSide && rightSide && ! downSide && ! upSide)
+        {
+          println("Right");
+          p.position.x = obj.pos.x + obj.size.x;
+          p.vel.x = max(p.vel.x,0);
+        }
+     
+    
+
+
+    
+
     }
   }
     
