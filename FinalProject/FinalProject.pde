@@ -8,17 +8,22 @@ boolean recentRight;
 
 ArrayList<ColObj> ColList;
 
+DialogueObj textTest;
 
 Player thePlayer;
 void setup()
 {
   frameRate(120);
   size(1000,800);
+  textSize(25);
   thePlayer = new Player(new PVector(0,0));
   ColList = new ArrayList<ColObj>();
   
-  ColList.add(new ColObj(new PVector(104.5,250.1),new PVector(200,200)));
+  ColList.add(new ColObj(new PVector(604.5,250.1),new PVector(200,200)));
+  ColList.add(new ColObj(new PVector(824.5,250.1),new PVector(200,200)));
   ColList.add(new ColObj(new PVector(500,500),new PVector(4,4)));
+  
+  textTest = new DialogueObj("Amogus", "This is a test");
   
 }
 
@@ -110,9 +115,10 @@ void keyPressed() {
     if (isTouching)
     {
         background(255, 50,50);
+        print(p.position);
         
-        boolean leftSide = p.position.x + p.size.x - 5 < obj.pos.x;
-        boolean rightSide = p.position.x + 5 > obj.pos.x + obj.size.x;
+        boolean leftSide = p.position.x + p.size.x - 4 < obj.pos.x;
+        boolean rightSide = p.position.x + 4 > obj.pos.x + obj.size.x;
         boolean downSide = p.position.y > obj.pos.y;
         boolean upSide = p.position.y - p.size.y < obj.pos.y - obj.size.y;
         
@@ -161,7 +167,7 @@ void draw()
     colDetector(thePlayer, obj);
     obj.render();
   }
-  
+  textTest.render();
   thePlayer.render();
 }
   
